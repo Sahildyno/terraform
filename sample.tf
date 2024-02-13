@@ -8,8 +8,8 @@ provider "aws" {
 resource "aws_instance" "my_instance" {
     ami = var.image_id
     instance_type = var.machine_type
-    key_name = "shubham-nv"
-    vpc_security_group_ids = [ "sg-0f0e3d11e9f465ba4", aws_security_group.my_sg.id ]
+    key_name = "new-universal-key"
+    vpc_security_group_ids = [ "sg-0ca2ae9bf1a0f4713", aws_security_group.my_sg.id ]
     tags = {
         Name = "my-instance"
         env = "dev"
@@ -20,8 +20,8 @@ resource "aws_instance" "my_instance" {
 resource "aws_instance" "another_instance" {
     ami = var.image_id
     instance_type = var.machine_type
-    key_name = "shubham-nv"
-    vpc_security_group_ids = ["sg-0f0e3d11e9f465ba4"]
+    key_name = "new-universal-key"
+    vpc_security_group_ids = ["sg-0ca2ae9bf1a0f4713"]
     tags = {
         Name = "another-instance"
         env = "dev"
@@ -31,7 +31,7 @@ resource "aws_instance" "another_instance" {
 # Variables
 
 variable "image_id" {
-    default = "ami-0c7217cdde317cfec"
+    default = "ami-03f4878755434977f"
 }
 
 variable "machine_type" {
@@ -39,5 +39,5 @@ variable "machine_type" {
 }
 
 variable "vpc_id" {
-    default = "vpc-06cf206737ed67da7"
+    default = "vpc-0970d6c61a6c23524"
 }
