@@ -9,7 +9,7 @@ resource "aws_instance" "my_instance" {
     ami = var.image_id
     instance_type = var.machine_type
     key_name = "new-universal-key"
-    vpc_security_group_ids = [ "sg-0ca2ae9bf1a0f4713", aws_security_group.my_sg.id ]
+    vpc_security_group_ids = [ "sg-0ca2ae9bf1a0f4713"]
     tags = {
         Name = "my-instance"
         env = "dev"
