@@ -23,7 +23,7 @@ resource "aws_s3_bucket" "A" {
 
 
 resource "aws_s3_bucket_policy" "A_policy" {
-    bucket = aws_s3_bucket_policy.A.id
+    bucket = aws_s3_bucket.A.id
     policy = <<EOF
 {
   "Version": "2012-10-17",
