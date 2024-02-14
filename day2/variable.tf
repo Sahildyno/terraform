@@ -26,6 +26,6 @@ variable "instance_type" {
     default = "t2.micro"
 }
 
-variable "key_pari" {
+variable "key_pair" {
     default = "new-universal-key"
 }
