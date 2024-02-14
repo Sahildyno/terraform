@@ -22,7 +22,7 @@ resource "aws_s3_bucket" "A" {
 }  
 
 
-resource "aws_s3_bucket_policy" "exmaple_A" {
+resource "aws_s3_bucket_policy" "A_policy" {
     bucket = aws_s3_bucket_policy.A.id
     policy = <<EOF
 {
