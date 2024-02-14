@@ -1,5 +1,5 @@
 variable "vpc_cidr" {
-    default = "172.31.0.0/16"
+    default = "192.168.0.0/16"
 }
 
 variable "private_subnet_cidr" {
