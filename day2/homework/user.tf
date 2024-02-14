@@ -18,7 +18,7 @@ resource "aws_s3_bucket" "A" {
     Environment = "Dev"
   }
 
-}  a
+}  
 
 
 resource "aws_s3_bucket_policy" "A_policy" {
