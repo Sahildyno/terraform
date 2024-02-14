@@ -13,9 +13,35 @@ resource "aws_iam_user" "lb" {
 
 resource "aws_s3_bucket" "A" {
   bucket = "my-tf-test-bucket0707"
-
+  acl = "private"
   tags = {
     Name        = "My bucket"
     Environment = "Dev"
   }
+
+}  
+
+
+resource "aws_s3_bucket_policy" "exmaple_A" {
+    bucket = aws_s3_bucket_policy.A.id
+    policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket"
+      ],
+      "Resource": [
+        "${aws_s3_bucket.example.arn}",
+        "${aws_s3_bucket.example.arn}/*"
+      ]
+    }
+  ]
+}
+EOF
+
 }
