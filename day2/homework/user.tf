@@ -21,26 +21,30 @@ resource "aws_s3_bucket" "A" {
 }  
 
 
-resource "aws_s3_bucket_policy" "A_policy" {
-    bucket = aws_s3_bucket.A.bucket
-    policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": "*",
-      "Action": [
-        "s3:GetObject",
-        "s3:ListBucket"
-      ],
-      "Resource": [
-        "${aws_s3_bucket.A.arn}",
-        "${aws_s3_bucket.A.arn}/*"
-      ]
-    }
-  ]
-}
-EOF
+resource "aws_iam_policy" "s3_access_policy" {
+  name        = "s3_access_policy"
+  description = "IAM policy for S3 bucket access"
 
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Effect   = "Allow",
+        Action   = [
+          "s3:GetObject",
+          "s3:PutObject",
+          "s3:ListBucket",
+        ],
+        Resource = [
+          aws_s3_bucket.A.arn,
+          "${aws_s3_bucket.A.arn}/*",
+        ],
+      },
+    ],
+  })
+}
+
+resource "aws_iam_user_policy_attachment" "s3_access_attachment" {
+  user       = aws_iam_user.lb.name
+  policy_arn = aws_iam_policy.s3_access_policy.arn
 }
