@@ -11,11 +11,11 @@ resource "aws_iam_user" "lb" {
   }
 }
 
-resource "aws_s3_bucket" "example" {
-  bucket = "my-tf-test-bucket"
-  acl = "private"
+resource "aws_s3_bucket" "A" {
+  bucket = "my-tf-test-bucket0707"
+
   tags = {
-    Name        = "My-bucket"
+    Name        = "My bucket"
     Environment = "Dev"
   }
 }
