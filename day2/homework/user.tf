@@ -12,7 +12,7 @@ resource "aws_iam_user" "lb" {
 }
 
 resource "aws_s3_bucket" "A" {
-  bucket = "var.s3_bucket_name"
+  bucket = "var.s3-bucket-name"
   tags = {
     Name        = "My bucket"
     Environment = "Dev"
