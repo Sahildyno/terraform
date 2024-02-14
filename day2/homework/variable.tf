@@ -1,3 +1,4 @@
-variable "aws_s3_bucket" {
-    default = "A"
+variable "s3_bucket_name" {
+  type    = string
+  default = "my-tf-test-bucket0707"
 }
