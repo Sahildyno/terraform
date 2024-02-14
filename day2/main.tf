@@ -1,49 +1,48 @@
 provider "aws" {
-    region = "ap-south-1"
+    region = "us-east-1"
 }
 
 resource "aws_vpc" "my_vpc" {
-    cidr_blocks = var.vpc_cidr 
+    cidr_block = var.vpc_cidr
     tags = {
-        name = "${var.project}-vpc"
+        Name = "${var.project}-vpc"
         env = var.env
     }
-} 
+}
 
 resource "aws_subnet" "private_subnet" {
-    vpc_id = aws_vpc.my_vpc.id 
+    vpc_id     = aws_vpc.my_vpc.id
     cidr_block = var.private_subnet_cidr
 
     tags = {
         env = var.env
-        name = "${var.project}-private-subnet"
+        Name = "${var.project}-private-subnet"
     }
 }
 
 resource "aws_subnet" "public_subnet" {
-    vpc_id = aws_vpc.my_vpc.id
+    vpc_id     = aws_vpc.my_vpc.id
     cidr_block = var.public_subnet_cidr
     map_public_ip_on_launch = true
     tags = {
         env = var.env
-        name = "${var.project}-public-subnet"
+        Name = "${var.project}-public-subnet"
     }
-
 }
 
 resource "aws_internet_gateway" "my_igw" {
-    vpc_id = aws_vpc.my_vpc.id
+  vpc_id = aws_vpc.my_vpc.id
 
-    tags = {
-        env = var.env 
-        mane = "${var.project}-igw"
-    }
+  tags = {
+    env = var.env
+    Name = "${var.project}-igw"
+  }
 }
 
 resource "aws_route" "igw_route" {
-    route_table_id  = aws_vpc.my_vpc.default_route_table_id
-    destination_cidr_block  = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.my_igw.id
+  route_table_id            = aws_vpc.my_vpc.default_route_table_id
+  destination_cidr_block    = "0.0.0.0/0"
+  gateway_id = aws_internet_gateway.my_igw.id
 }
 
 resource "aws_security_group" "my_sg" {
@@ -52,14 +51,13 @@ resource "aws_security_group" "my_sg" {
     vpc_id = aws_vpc.my_vpc.id
     ingress {
         cidr_blocks = ["0.0.0.0/0"]
-        protocol = "tcp"
+        protocol = "TCP"
         from_port = 22
         to_port = 22
-
     }
     ingress {
         cidr_blocks = ["0.0.0.0/0"]
-        protocol = "tcp"
+        protocol = "TCP"
         from_port = 80
         to_port = 80
     }
@@ -74,24 +72,24 @@ resource "aws_security_group" "my_sg" {
 
 resource "aws_instance" "instance_1" {
     ami = var.image_id
-    instnace_type = var.instance_type
-    kye_name = var.key_pair
+    instance_type = var.instance_type
+    key_name = var.key_pair
     vpc_security_group_ids = [aws_security_group.my_sg.id]
     tags = {
-        Name = "${var.project}-private-instnace"
+        Name = "${var.project}-private-instance"
         env = var.env
     }
     subnet_id = aws_subnet.private_subnet.id
 }
-resource "aws_instance" "instance_2"{
+
+resource "aws_instance" "instance_2" {
     ami = var.image_id
     instance_type = var.instance_type
     key_name = var.key_pair
     vpc_security_group_ids = [aws_security_group.my_sg.id]
     tags = {
-        name = "${var.project}-public-instnace"
+        Name = "${var.project}-public-instance"
         env = var.env
     }
     subnet_id = aws_subnet.public_subnet.id
-
 }

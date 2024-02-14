@@ -1,5 +1,5 @@
 output "hello_world" {
-    value = "hello_world. welcome to cloudblitz"
+    value = "Hello World. Welcome to Cloudblitz"
 }
 
 output "public-instance-public-ip" {
@@ -7,9 +7,9 @@ output "public-instance-public-ip" {
 }
 
 output "public-instance-state" {
-    value = aws_instance_2.instance_state
+    value = aws_instance.instance_2.instance_state 
 }
 
-output "public-instance-state" {
-    value = aws_instance.instance_1.instance_state
+output "private-instance-state" {
+    value = aws_instance.instance_1.instance_state 
 }

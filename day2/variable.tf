@@ -7,7 +7,7 @@ variable "private_subnet_cidr" {
 }
 
 variable "public_subnet_cidr" {
-    default = "192.168.0.0/20
+    default = "192.168.16.0/20"
 }
 
 variable "project" {
@@ -19,13 +19,11 @@ variable "env" {
 }
 
 variable "image_id" {
-    default = "ami-03f4878755434977f"
+    default = "ami-0c7217cdde317cfec"
 }
-
 variable "instance_type" {
     default = "t2.micro"
 }
-
 variable "key_pair" {
-    default = "new-universal-key"
+    default = "shubham-nv"
 }
