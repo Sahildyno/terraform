@@ -7,7 +7,7 @@ variable "private_subnet_cidr" {
 }
 
 variable "public_subnet_cidr" {
-    default = "172.31.32.0/20"
+    default = "172.31.16.0/20"
 }
 
 variable "project" {
