@@ -36,8 +36,8 @@ resource "aws_s3_bucket_policy" "A_policy" {
         "s3:ListBucket"
       ],
       "Resource": [
-        "${aws_s3_bucket.example.arn}",
-        "${aws_s3_bucket.example.arn}/*"
+        "${aws_s3_bucket.A.arn}",
+        "${aws_s3_bucket.A.arn}/*"
       ]
     }
   ]
