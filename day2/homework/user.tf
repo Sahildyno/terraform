@@ -3,10 +3,10 @@ provider "aws" {
 }
 
 resource "aws_iam_user" "lb" {
-     name = "loadbalancer"
-     path = "/system/"
+  name = "loadbalancer"
+  path = "/system/"
 
   tags = {
-     tag-key = "tag-value"
+    tag-key = "tag-value"
   }
 }
