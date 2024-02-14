@@ -18,11 +18,11 @@ resource "aws_s3_bucket" "A" {
     Environment = "Dev"
   }
 
-}  
+}  a
 
 
-resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
-    bucket = aws_s3_bucket.A.id
+resource "aws_s3_bucket_policy" "A_policy" {
+    bucket = aws_s3_bucket.A.bucket
     policy = <<EOF
 {
   "Version": "2012-10-17",
