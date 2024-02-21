@@ -7,7 +7,7 @@ variable "instance_type" {
 }
 
 variable "ssh_key" {
-    default = "shubham-nv"
+    default = "terraform"
 }
 
 variable "project" {
@@ -15,7 +15,7 @@ variable "project" {
 }
 
 variable "sg_id" {
-    default = "sg-0e1a0c4dc73ab9bbc"
+    default = "sg-02b005667583d4fde"
 }
 
 variable "min_size" {
@@ -31,7 +31,7 @@ variable "desired_capacity" {
 }
 
 variable "subnets" {
-    default = ["subnet-05117aa5bd407d057", "subnet-03a62415a23a7e7bb"]
+    default = ["subnet-0ca47169f26baa191", "subnet-0ff405b6edb107c11"]
 }
 
 variable "env" {
@@ -39,8 +39,8 @@ variable "env" {
 }
 
 variable "vpc_id" {
-    default = "vpc-06cf206737ed67da7"
+    default = "vpc-0303203b0297c5f02"
 }
 variable "azs" {
-    default = ["us-east-1c", "us-east-1b"]
+    default = ["ap-south-1c", "ap-south-1a"]
 }
