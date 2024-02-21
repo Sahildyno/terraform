@@ -2,39 +2,16 @@ provider "aws" {
   region = "ap-south-1"
 }
 
-# Create VPC
-resource "aws_vpc" "eks_vpc" {
-  cidr_block = var.vpc_cidr_block
-tag = {
-  Name = "$(var.project)-vpc"
-  env = var.env
-  }
-}
-
-# Create Subnets
-resource "aws_subnet" "eks_subnet" {
-  count = length(var.subnet_cidr_blocks)
-
-  vpc_id                  = aws_vpc.eks_vpc.id
-  cidr_block              = var.subnet_cidr_blocks[count.index]
-  availability_zone       = "ap-south-1${element(["a", "c"], count.index)}"
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = "eks-subnet-${element(["a", "c"], count.index)}"
-  }
-}
-
-# Create EKS Cluster
-resource "aws_eks_cluster" "eks_cluster" {
-  name     = var.eks_cluster_name
+resource "aws_eks_cluster" "my_cluster" {
+  name     = "my-eks-cluster"
   role_arn = aws_iam_role.eks_cluster.arn
+  version  = "1.28"
+
   vpc_config {
-    subnet_ids = aws_subnet.eks_subnet[*].id
+    subnet_ids = ["subnet-0ca47169f26baa191", "subnet-0ff405b6edb107c11"]
   }
 }
 
-# Create IAM Role for EKS Cluster
 resource "aws_iam_role" "eks_cluster" {
   name = "eks-cluster-role"
 
@@ -43,20 +20,24 @@ resource "aws_iam_role" "eks_cluster" {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
       "Principal": {
         "Service": "eks.amazonaws.com"
       },
-      "Action": "sts:AssumeRole"
+      "Effect": "Allow",
+      "Sid": ""
     }
   ]
 }
 EOF
 }
 
-# Attach AmazonEKSClusterPolicy to the IAM Role
 resource "aws_iam_role_policy_attachment" "eks_cluster_policy_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role       = aws_iam_role.eks_cluster.name
 }
 
+resource "aws_iam_role_policy_attachment" "eks_service_policy_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+  role       = aws_iam_role.eks_cluster.name
+}
