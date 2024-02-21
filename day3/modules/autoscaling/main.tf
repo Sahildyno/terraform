@@ -45,12 +45,14 @@ resource "aws_launch_configuration" "lc_mobile" {
             EOF
 }
 
+
+
 resource "aws_autoscaling_group" "as_home" {
     name = "${var.project}-as-home"
     max_size = var.max_size
     min_size = var.min_size
     desired_capacity = var.desired_capacity
-    availability_zones = var.subnet_ids
+    availability_zones = var.azs
     launch_configuration = aws_launch_configuration.lc_home.name
     tag {
         key = "Name"
@@ -66,6 +68,10 @@ resource "aws_autoscaling_policy" "as_policy_home" {
   predictive_scaling_configuration {
     metric_specification {
       target_value = 50
+      predefined_load_metric_specification {
+        predefined_metric_type = "ASGTotalCPUUtilization"
+        resource_label         = "app/cloudblitz-lb/778d41231b141a0f/targetgroup/cloudblitz-tg-home/943f017f100becff"
+      }
       customized_scaling_metric_specification {
         metric_data_queries {
           id = "scaling"
@@ -92,7 +98,7 @@ resource "aws_autoscaling_group" "as_laptop" {
     max_size = var.max_size
     min_size = var.min_size
     desired_capacity = var.desired_capacity
-    availability_zones = var.subnet_ids
+    availability_zones = var.azs
     launch_configuration = aws_launch_configuration.lc_laptop.name
     tag {
         key = "Name"
@@ -108,6 +114,10 @@ resource "aws_autoscaling_policy" "as_policy_laptop" {
   predictive_scaling_configuration {
     metric_specification {
       target_value = 50
+      predefined_load_metric_specification {
+        predefined_metric_type = "ASGTotalCPUUtilization"
+        resource_label         = "app/cloudblitz-lb/778d41231b141a0f/targetgroup/cloudblitz-tg-laptop/943f017f100becff"
+      }
       customized_scaling_metric_specification {
         metric_data_queries {
           id = "scaling"
@@ -134,7 +144,7 @@ resource "aws_autoscaling_group" "as_mobile" {
     max_size = var.max_size
     min_size = var.min_size
     desired_capacity = var.desired_capacity
-    availability_zones = var.subnet_ids
+    availability_zones = var.azs
     launch_configuration = aws_launch_configuration.lc_mobile.name
     tag {
         key = "Name"
@@ -150,6 +160,10 @@ resource "aws_autoscaling_policy" "as_policy_mobile" {
   predictive_scaling_configuration {
     metric_specification {
       target_value = 50
+      predefined_load_metric_specification {
+        predefined_metric_type = "ASGTotalCPUUtilization"
+        resource_label         = "app/cloudblitz-lb/778d41231b141a0f/targetgroup/cloudblitz-tg-mobile/943f017f100becff"
+      }
       customized_scaling_metric_specification {
         metric_data_queries {
           id = "scaling"
@@ -169,3 +183,4 @@ resource "aws_autoscaling_policy" "as_policy_mobile" {
     }
   }
 }
+

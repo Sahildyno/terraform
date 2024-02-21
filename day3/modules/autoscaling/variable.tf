@@ -7,3 +7,4 @@ variable "min_size" {}
 variable "max_size" {}
 variable "desired_capacity" {}
 variable "subnet_ids" {}
+variable "azs" {}

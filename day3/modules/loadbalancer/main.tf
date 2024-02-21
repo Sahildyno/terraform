@@ -2,10 +2,11 @@ resource "aws_lb_target_group" "tg_home" {
   name     = "${var.project}-tg-home"
   port     = 80
   protocol = "HTTP"
+  vpc_id = var.vpc_id
   tags = {
     Env = var.env
   }
-  health_check = {
+  health_check {
     path = "/"
   }
 }
@@ -14,10 +15,11 @@ resource "aws_lb_target_group" "tg_mobile" {
   name     = "${var.project}-tg-mobile"
   port     = 80
   protocol = "HTTP"
+  vpc_id = var.vpc_id
   tags = {
     Env = var.env
   }
-  health_check = {
+  health_check {
     path = "/mobile/"
   }
 }
@@ -25,11 +27,12 @@ resource "aws_lb_target_group" "tg_mobile" {
 resource "aws_lb_target_group" "tg_laptop" {
   name     = "${var.project}-tg-laptop"
   port     = 80
-  protocol = "HTTP"
+  protocol = "HTTP"  
+  vpc_id = var.vpc_id
   tags = {
     Env = var.env
   }
-  health_check = {
+  health_check {
     path = "/laptop/"
   }
 }
@@ -55,7 +58,7 @@ resource "aws_lb_listener" "home" {
   }
 }
 
-resource  "aws_lb_listener_rule" "static" {
+resource  "aws_lb_listener_rule" "laptop_rule" {
   listener_arn = aws_lb_listener.home.arn
   priority     = 101
 
@@ -71,7 +74,7 @@ resource  "aws_lb_listener_rule" "static" {
   }
 }
 
-resource  "aws_lb_listener_rule" "static" {
+resource  "aws_lb_listener_rule" "mobile_rule" {
   listener_arn = aws_lb_listener.home.arn
   priority     = 102
 
