@@ -45,4 +45,23 @@ resource "aws_instance" "my_instance" {
         private_key = file("./private.pem")
         host        = self.public_ip
     }
+
+
+provisioner "remote-exec" {
+    inline = [
+        "sudo yum install httpd -y",
+        "sudo systemctl start httpd",
+        "sudo systemctl enable httpd"
+        ]
+    }
+
+    provisioner "local-exec" {
+        command = "echo '<h1> Hello World' > index.html"
+        # command = "echo ${self.public_ip} >> ips.txt"
+    }
+
+    provisioner "file" {
+        source = "index.html"
+        destination = "/var/www/html/index.html"
+    }
 }
